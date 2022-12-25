@@ -9,7 +9,7 @@ export default function TTS() {
         utterThis.voice = voices.find(v =>
           v.voiceURI.toLowerCase().includes(lang)
         )
-        // console.log(voices.find(v => v.voiceURI.toLowerCase().includes(lang)))
+        console.log(voices)
         synth.speak(utterThis)
         utterThis.onend = () => {
           resolve()
