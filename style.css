@@ -1,4 +1,30 @@
+
+* {
+  box-sizing: content-box;
+  padding: 0;
+  margin: 0;
+}
+
 html {
   background: hsl(197, 37%, 24%);
   color: aliceblue;
+}
+
+#timeline {
+  width: 90%;
+}
+
+#play {
+  padding: 10px 50px ;
+  font-size: 30px;
+}
+
+.app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }

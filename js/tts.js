@@ -9,13 +9,15 @@ export default function TTS() {
         utterThis.voice = voices.find(v =>
           v.voiceURI.toLowerCase().includes(lang)
         )
-        console.log(voices.find(v => v.voiceURI.toLowerCase().includes(lang)))
+        // console.log(voices.find(v => v.voiceURI.toLowerCase().includes(lang)))
         synth.speak(utterThis)
         utterThis.onend = () => {
           resolve()
         }
       })
     }
+
+    const stop = () => synth.cancel()
 
     const wait = time =>
       new Promise(resolve => setTimeout(() => resolve(), time))
@@ -25,6 +27,7 @@ export default function TTS() {
       resolve({
         speak,
         wait,
+        stop,
       })
     }, 300)
   })
