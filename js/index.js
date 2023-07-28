@@ -16,13 +16,17 @@ async function app() {
   const local = localStorage.getItem('index-sentence')
   let canPlay = true
 
-  let index = local ? Number(local) : 0
+  let index = Number(local ? Number(local) : 0)
 
   async function play() {
+    debugger
     const [eng, pt] = sentences[index]
     console.log({ sentence: sentences[index][0], index })
-    await tts.speak(pt, 'brasil')
-    await tts.wait(1000)
+    const characterPerSecond = 10
+    await tts.speak(pt, 'brasil', 1.2)
+    const secToSpeakSentence =
+      eng.replace(/\s+/g, '').length / characterPerSecond
+    await tts.wait(1000 * secToSpeakSentence)
     if (!canPlay) return
     await tts.speak(eng, 'us')
     await tts.wait(10)
