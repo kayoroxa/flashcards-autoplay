@@ -3,7 +3,7 @@ export default function TTS() {
     const synth = window.speechSynthesis
     let voices = []
 
-    function speak(sentence = 'oi tudo bom?', lang = 'brasil', rate = 1.2) {
+    function speak(sentence = 'oi tudo bom?', lang = 'brasil', rate = 1) {
       return new Promise(resolve => {
         const utterThis = new SpeechSynthesisUtterance(sentence)
         utterThis.voice = voices.find(v =>

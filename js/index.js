@@ -3,6 +3,7 @@ import TimeLine from './timeline.js'
 import TTS from './tts.js'
 
 const sentences = rawSentences
+  .trim()
   .split('\n\n')
   .filter(Boolean)
   .map(v => v.split('\n').filter(Boolean))
@@ -19,8 +20,15 @@ async function app() {
   let index = Number(local ? Number(local) : 0)
 
   async function play() {
-    debugger
     const [eng, pt] = sentences[index]
+    console.log({ eng, pt })
+    if (pt.includes('-') || eng.includes('-')) {
+      await new Promise(r => setTimeout(r, 13000))
+      index++
+      timeLine.setIndex(index)
+      play()
+      return
+    }
     console.log({ sentence: sentences[index][0], index })
     const characterPerSecond = 10
     await tts.speak(pt, 'brasil', 1.2)
