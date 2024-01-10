@@ -1,28 +1,37 @@
-import rawSentences from './sentences.js'
+import { getSentences } from './getSentences.js'
 import TimeLine from './timeline.js'
 import TTS from './tts.js'
 
-const sentences = rawSentences
-  .trim()
-  .split('\n\n')
-  .filter(Boolean)
-  .map(v => v.split('\n').filter(Boolean))
+// import sentences from './getSentences.js'
 
-const timeLine = TimeLine({
-  max: sentences.length,
-})
+// .filter(v => v[0]?.length && v[1])
+
+function getMySentences() {
+  const textArea = document.querySelector('#sentences')
+  sentences = getSentences(textArea.value)
+  return sentences
+}
+
+let sentences
 
 async function app() {
+  const timeLine = TimeLine({
+    max: sentences.length,
+  })
+
   const tts = await TTS()
   const local = localStorage.getItem('index-sentence')
   let canPlay = true
 
-  let index = Number(local ? Number(local) : 0)
+  let index = 0 //Number(local ? Number(local) : 0)
 
   async function play() {
+    sentences = getMySentences()
+
     const [eng, pt] = sentences[index]
+    // const [eng, pt] = sentences[index]
     console.log({ eng, pt })
-    if (pt.includes('-') || eng.includes('-')) {
+    if (pt.includes('--') || eng.includes('--')) {
       await new Promise(r => setTimeout(r, 13000))
       index++
       timeLine.setIndex(index)
@@ -67,4 +76,9 @@ async function app() {
   })
 }
 
-app()
+//onkeydown
+const textareaInput = document.querySelector('#sentences')
+textareaInput.addEventListener('input', () => {
+  sentences = textareaInput.value
+  app()
+})
