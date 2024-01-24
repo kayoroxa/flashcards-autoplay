@@ -607,6 +607,7 @@ Escutou o que eu acabei de dizer?
 
 How come you're so nice to me?
 Por que você é tão legal comigo?
+
 `
 // I think English is the best language to learn. It's so widely spoken!
 // Eu acho que o inglês é a melhor língua para aprender. É tão amplamente falado!

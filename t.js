@@ -3,11 +3,20 @@ const fs = require('fs')
 const has = [
   // '\\bas .* as\\b',
   // '\\bthe most\\b',
+  '\\bthe most\\b',
+  've never',
+  // '^it',
+  'just',
+  // 'not .* but',
+  'How come',
+  // "(?<!is|are|be|'s|'re|was|were|'m|am) \\w+[^h]ing",
   // '\\bthan\\b',
   // '\\w+full',
   // '\\w+lier',
   // '\\bthe least\\b',
   // '\\w+iest\\b',
+  // '\\?',
+  // 'had better',
 ]
 
 let sentences = fs
@@ -24,7 +33,7 @@ const regexWords = JSON.stringify(has)
 const wordsMostUsed = [
   ...require('C:/Users/Caio/OneDrive/SYNC - INGLÊS FLIX/words most used.json').splice(
     0,
-    3000
+    4000
   ),
 ]
 
@@ -39,16 +48,18 @@ const replaceRandom = [
 ]
 
 let oi = sentences.filter(sentence => {
-  if (sentence.length > 51 || sentence.length < 35 || sentence.includes('Tom'))
+  if (sentence.length > 40 || sentence.length < 30 || sentence.includes('Tom'))
     return false
-  if (!has.some(m => sentence.match(new RegExp(m, 'gi')))) return false
+  if (!sentence.includes('?')) return false
+  if (has.length && !has.some(m => sentence.match(new RegExp(m, 'gi'))))
+    return false
 
   const words = sentence.toLowerCase().match(/[a-zA-Z][’'a-zA-Z]*/gi)
 
   return words.every(
     w =>
       wordsMostUsed.includes(w) ||
-      regexWords.some(m => w.match(new RegExp(m, 'gi')))
+      regexWords?.some(m => w.match(new RegExp(m, 'gi')))
   )
 })
 // .map(sentence => {
@@ -68,4 +79,4 @@ oi = shuffle(oi)
 // oi = oi.filter(v => v.length > 35)
 console.clear()
 
-console.log(oi.slice(0, 100).join('\n'))
+console.log(oi.slice(0, 300).join('\n'))
